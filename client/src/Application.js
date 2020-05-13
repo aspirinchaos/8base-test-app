@@ -10,18 +10,18 @@ import { TOAST_SUCCESS_MESSAGE } from 'shared/constants';
 
 import { MainPlate, ContentPlate, Nav } from './components';
 import { Auth as AuthCallback } from './routes/auth';
+import { Clients } from './routes/clients';
 
-const { REACT_APP_8BASE_API_ENDPOINT } = process.env;
-
-const AUTH0_CLIENT_ID = 'qGHZVu5CxY5klivm28OPLjopvsYp0baD';
-const AUTH0_CLIENT_DOMAIN = 'auth.8base.com';
+const {
+  REACT_APP_8BASE_API_ENDPOINT,
+  REACT_APP_8BASE_API_TOKEN,
+} = process.env;
 
 const authClient = Auth.createClient({
-  strategy: AUTH_STRATEGIES.WEB_AUTH0,
+  strategy: AUTH_STRATEGIES.API_TOKEN,
   subscribable: true,
 }, {
-  clientId: AUTH0_CLIENT_ID,
-  domain: AUTH0_CLIENT_DOMAIN,
+  apiToken: REACT_APP_8BASE_API_TOKEN,
   redirectUri: `${window.location.origin}/auth/callback`,
   logoutRedirectUri: `${window.location.origin}/auth`,
 });
@@ -34,9 +34,12 @@ class Application extends React.PureComponent {
         <Route>
           <MainPlate>
             <Nav.Plate color="BLUE">
+              <Nav.Item icon="Customers" to="/clients" label="Clients" />
             </Nav.Plate>
             <ContentPlate>
               <Switch>
+                <ProtectedRoute exact path="/clients" component={Clients} />
+                <Redirect to="/clients" />
               </Switch>
             </ContentPlate>
           </MainPlate>
