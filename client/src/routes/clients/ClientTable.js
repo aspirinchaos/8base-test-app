@@ -3,41 +3,43 @@ import { compose } from 'recompose';
 import * as R from 'ramda';
 import { Table, Dropdown, Icon, Menu, withModal } from '@8base/boost';
 import { graphql } from 'react-apollo';
+import { DateTime } from 'luxon';
 
 import * as sharedGraphQL from 'shared/graphql';
 
-import { CustomerCreateDialog } from './CustomerCreateDialog';
-import { CustomerDeleteDialog } from './CustomerDeleteDialog';
+import { ClientCreateDialog } from './ClientCreateDialog';
+import { ClientEditDialog } from './ClientEditDialog';
+import { ClientDeleteDialog } from './ClientDeleteDialog';
 
-let CustomersTable = ({ customers, openModal, closeModal }) => (
+let ClientTable = ({ clients, openModal, closeModal }) => (
   <Table>
     <Table.Header columns="repeat(5, 1fr) 60px">
       <Table.HeaderCell>First Name</Table.HeaderCell>
       <Table.HeaderCell>Last Name</Table.HeaderCell>
       <Table.HeaderCell>Email</Table.HeaderCell>
-      <Table.HeaderCell>Purchases</Table.HeaderCell>
-      <Table.HeaderCell>Sales</Table.HeaderCell>
+      <Table.HeaderCell>Phone</Table.HeaderCell>
+      <Table.HeaderCell>Birthday</Table.HeaderCell>
       <Table.HeaderCell />
     </Table.Header>
 
-    <Table.Body loading={ customers.loading } data={ R.pathOr([], ['customersList', 'items'], customers) } action="Create Customer" onActionClick={() => openModal(CustomerCreateDialog.id)}>
+    <Table.Body loading={ clients.loading } data={ R.pathOr([], ['clientsList', 'items'], clients) } action="Create Client" onActionClick={() => openModal(ClientCreateDialog.id)}>
       {
-        (customer) => (
-          <Table.BodyRow columns="repeat(5, 1fr) 60px" key={ customer.id }>
+        (client) => (
+          <Table.BodyRow columns="repeat(5, 1fr) 60px" key={ client.id }>
             <Table.BodyCell>
-              { R.pathOr('Unititled', ['user', 'firstName'], customer) }
+              { client.firstName }
             </Table.BodyCell>
             <Table.BodyCell>
-              { R.pathOr('Unititled', ['user', 'lastName'], customer) }
+              { client.lastName }
             </Table.BodyCell>
             <Table.BodyCell>
-              { R.pathOr('Unititled', ['user', 'email'], customer) }
+              { client.email }
             </Table.BodyCell>
             <Table.BodyCell>
-              { R.pathOr(0, ['purchases', 'count'], customer) }
+              +{ client.phone.code }{ client.phone.number }
             </Table.BodyCell>
             <Table.BodyCell>
-              { R.pathOr(0, ['sales', 'count'], customer) }
+              { DateTime.fromISO(client.birthday).toFormat('dd/mm/yyyy') }
             </Table.BodyCell>
             <Table.BodyCell>
               <Dropdown defaultOpen={ false }>
@@ -48,7 +50,8 @@ let CustomersTable = ({ customers, openModal, closeModal }) => (
                   {
                     ({ closeDropdown }) => (
                       <Menu>
-                        <Menu.Item onClick={ () => { openModal(CustomerDeleteDialog.id, { id: customer.id }); closeDropdown(); } }>Delete</Menu.Item>
+                        <Menu.Item onClick={ () => { openModal(ClientEditDialog.id, { initialValues: client }); closeDropdown(); } }>Edit</Menu.Item>
+                        <Menu.Item onClick={ () => { openModal(ClientDeleteDialog.id, { id: client.id }); closeDropdown(); } }>Delete</Menu.Item>
                       </Menu>
                     )
                   }
@@ -62,9 +65,9 @@ let CustomersTable = ({ customers, openModal, closeModal }) => (
   </Table>
 );
 
-CustomersTable = compose(
+ClientTable = compose(
   withModal,
-  graphql(sharedGraphQL.CUSTOMERS_LIST_QUERY, { name: 'customers' }),
-)(CustomersTable);
+  graphql(sharedGraphQL.CLIENTS_LIST_QUERY, { name: 'clients' }),
+)(ClientTable);
 
-export { CustomersTable };
+export { ClientTable };

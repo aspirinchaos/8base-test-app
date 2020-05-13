@@ -28,38 +28,43 @@ export const BROKER_DELETE_MUTATION = gql`
   }
 `;
 
-export const CUSTOMER_CREATE_MUTATION = gql`
-  mutation CustomerCreate($data: CustomerCreateInput!) {
-    customerCreate(data: $data) {
+export const CLIENT_CREATE_MUTATION = gql`
+  mutation CustomerCreate($data: ClientCreateInput!) {
+    clientCreate(data: $data) {
       id
     }
   }
 `;
 
-export const CUSTOMER_DELETE_MUTATION = gql`
-  mutation CustomerDelete($id: ID!) {
-    customerDelete(data: { id: $id }) {
+export const CLIENT_UPDATE_MUTATION = gql`
+  mutation CustomerUpdate($data: ClientUpdateInput!) {
+    clientUpdate(data: $data) {
+      id
+    }
+  }
+`;
+
+export const CLIENT_DELETE_MUTATION = gql`
+  mutation ClientDelete($id: ID!) {
+    clientDelete(data: { id: $id }) {
       success
     }
   }
 `;
 
-export const CUSTOMERS_LIST_QUERY = gql`
-  query CustomersList {
-    customersList {
+export const CLIENTS_LIST_QUERY = gql`
+  query ClientsList {
+    clientsList {
       items {
         id
-        user {
-          email
-          firstName
-          lastName
+        firstName
+        lastName
+        email
+        phone {
+          code
+          number
         }
-        purchases {
-          count
-        }
-        sales {
-          count
-        }
+        birthday
       }
     }
   }

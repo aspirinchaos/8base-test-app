@@ -6,30 +6,30 @@ import { graphql } from 'react-apollo';
 import * as sharedGraphQL from 'shared/graphql';
 import { TOAST_SUCCESS_MESSAGE } from 'shared/constants';
 
-const CUSTOMER_DELETE_DIALOG_ID = 'CUSTOMER_DELETE_DIALOG_ID';
+const CLIENT_DELETE_DIALOG_ID = 'CLIENT_DELETE_DIALOG_ID';
 
-class CustomerDeleteDialog extends React.Component {
+class ClientDeleteDialog extends React.Component {
   static contextType = ModalContext;
 
   createOnSubmit = (id) => async () => {
     await this.props.customerDelete({ variables: { id }});
 
-    this.context.closeModal(CUSTOMER_DELETE_DIALOG_ID);
+    this.context.closeModal(CLIENT_DELETE_DIALOG_ID);
   };
 
   onClose = () => {
-    this.context.closeModal(CUSTOMER_DELETE_DIALOG_ID);
+    this.context.closeModal(CLIENT_DELETE_DIALOG_ID);
   };
 
   renderFormContent = ({ handleSubmit, invalid, submitting }) => (
     <form onSubmit={ handleSubmit }>
-      <Dialog.Header title="Delete Customer" onClose={ this.onClose } />
+      <Dialog.Header title="Delete Client" onClose={ this.onClose } />
       <Dialog.Body scrollable>
-        Are you really want to delete customer?
+        Are you really want to delete client?
       </Dialog.Body>
       <Dialog.Footer>
         <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ this.onClose }>Cancel</Button>
-        <Button color="danger" type="submit" disabled={ invalid } loading={ submitting }>Delete Customer</Button>
+        <Button color="danger" type="submit" disabled={ invalid } loading={ submitting }>Delete Client</Button>
       </Dialog.Footer>
     </form>
   );
@@ -44,23 +44,23 @@ class CustomerDeleteDialog extends React.Component {
 
   render() {
     return (
-      <Dialog id={ CUSTOMER_DELETE_DIALOG_ID } size="sm">
+      <Dialog id={ CLIENT_DELETE_DIALOG_ID } size="sm">
         { this.renderContent }
       </Dialog>
     );
   }
 }
 
-CustomerDeleteDialog = graphql(sharedGraphQL.CUSTOMER_DELETE_MUTATION, {
+ClientDeleteDialog = graphql(sharedGraphQL.CLIENT_DELETE_MUTATION, {
   name: 'customerDelete',
   options: {
-    refetchQueries: ['CustomersList'],
+    refetchQueries: ['ClientsList'],
     context: {
-      [TOAST_SUCCESS_MESSAGE]: 'Customer successfuly deleted'
+      [TOAST_SUCCESS_MESSAGE]: 'Client successfully deleted'
     },
   },
-})(CustomerDeleteDialog);
+})(ClientDeleteDialog);
 
-CustomerDeleteDialog.id = CUSTOMER_DELETE_DIALOG_ID;
+ClientDeleteDialog.id = CLIENT_DELETE_DIALOG_ID;
 
-export { CustomerDeleteDialog };
+export { ClientDeleteDialog };
