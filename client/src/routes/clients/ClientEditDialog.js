@@ -48,7 +48,7 @@ class ClientEditDialog extends React.Component {
       </Dialog.Body>
       <Dialog.Footer>
         <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ this.onClose }>Cancel</Button>
-        <Button color="primary" type="submit" loading={ submitting }>Create Client</Button>
+        <Button color="primary" type="submit" loading={ submitting }>Update Client</Button>
       </Dialog.Footer>
     </form>
   );

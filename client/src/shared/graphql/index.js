@@ -1,35 +1,7 @@
 import gql from 'graphql-tag';
 
-export const BROKER_CREATE_MUTATION = gql`
-  mutation BrokerCreate($data: BrokerCreateInput!) {
-    brokerCreate(data: $data) {
-      id
-    }
-  }
-`;
-
-export const USERS_LIST_QUERY = gql`
-  query UsersList {
-    usersList {
-      items {
-        id
-        firstName
-        lastName
-      }
-    }
-  }
-`;
-
-export const BROKER_DELETE_MUTATION = gql`
-  mutation BrokerDelete($id: ID!) {
-    brokerDelete(data: { id: $id }) {
-      success
-    }
-  }
-`;
-
 export const CLIENT_CREATE_MUTATION = gql`
-  mutation CustomerCreate($data: ClientCreateInput!) {
+  mutation ClientCreate($data: ClientCreateInput!) {
     clientCreate(data: $data) {
       id
     }
@@ -37,7 +9,7 @@ export const CLIENT_CREATE_MUTATION = gql`
 `;
 
 export const CLIENT_UPDATE_MUTATION = gql`
-  mutation CustomerUpdate($data: ClientUpdateInput!) {
+  mutation ClientUpdate($data: ClientUpdateInput!) {
     clientUpdate(data: $data) {
       id
     }
@@ -70,150 +42,46 @@ export const CLIENTS_LIST_QUERY = gql`
   }
 `;
 
-export const LISTING_CREATE_MUTATION = gql`
-  mutation ListingCreate($data: ListingCreateInput!) {
-    listingCreate(data: $data) {
+
+export const PRODUCT_CREATE_MUTATION = gql`
+  mutation ProductCreate($data: ProductCreateInput!) {
+    productCreate(data: $data) {
       id
     }
   }
 `;
 
-export const LISTING_UPDATE_MUTATION = gql`
-  mutation ListingUpdate($data: ListingUpdateInput!) {
-    listingUpdate(data: $data) {
+export const PRODUCT_UPDATE_MUTATION = gql`
+  mutation ProductUpdate($data: ProductUpdateInput!) {
+    productUpdate(data: $data) {
       id
     }
   }
 `;
 
-export const LISTING_SHARE_MUTATION = gql`
-  mutation ListingShare($id: ID!, $email: String!) {
-    listingShare(id: $id, email: $email) {
+export const PRODUCT_DELETE_MUTATION = gql`
+  mutation ProductDelete($id: ID!) {
+    productDelete(data: { id: $id }) {
       success
     }
   }
 `;
 
-export const LISTING_DELETE_MUTATION = gql`
-  mutation ListingDelete($id: ID!) {
-    listingDelete(data: { id: $id }) {
-      success
-    }
-  }
-`;
-
-export const BROKERS_LIST_QUERY = gql`
-  query BrokersList {
-    brokersList {
+export const PRODUCTS_LIST_QUERY = gql`
+  query ProductsList {
+    productsList {
       items {
         id
-        user {
-          email
-          firstName
-          lastName
-        }
-        listings {
-          count
-        }
-      }
-    }
-  }
-`;
-
-export const LISTINGS_LIST_QUERY = gql`
-  query ListingsList($orderBy: [ListingOrderBy], $skip: Int, $first: Int) {
-    listingsList(orderBy: $orderBy, skip: $skip, first: $first) {
-      items {
-        id
-        createdAt
-        updatedAt
-        property {
-          id
-          title
-        }
-        broker {
-          id
-          user {
-            firstName
-            lastName 
-          }
-        }
-        buyer {
-          id
-          user {
-            firstName
-            lastName 
-          }
-        }
-        seller {
-          id
-          user {
-            firstName
-            lastName 
-          }
-        }
-        documents {
-          items {
-            id
-            filename
-            downloadUrl
-          }
-        }
-        status
-        closingDate
-        price
-      }
-      count
-    }
-  }
-`;
-
-export const PROPERTY_DELETE_MUTATION = gql`
-  mutation PropertyDelete($id: ID!) {
-    propertyDelete(data: { id: $id }) {
-      success
-    }
-  }
-`;
-
-export const PROPERTY_CREATE_MUTATION = gql`
-  mutation PropertyCreate($data: PropertyCreateInput!) {
-    propertyCreate(data: $data) {
-      id
-    }
-  }
-`;
-
-export const PROPERTY_UPDATE_MUTATION = gql`
-  mutation PropertyUpdate($data: PropertyUpdateInput!) {
-    propertyUpdate(data: $data) {
-      id
-    }
-  }
-`;
-
-export const PROPERTIES_LIST_QUERY = gql`
-  query PropertiesList {
-    propertiesList {
-      items {
-        id
-        createdAt
-        updatedAt
-        pictures {
-          items {
-            id
-            downloadUrl
-            shareUrl
-          }
-        }
-        bedrooms
-        title
+        name
         description
-        sqFootage
-        bathrooms
-        garage
-        pool
+        price
+        picture {
+          id
+          downloadUrl
+          shareUrl
+        }
       }
     }
   }
 `;
+

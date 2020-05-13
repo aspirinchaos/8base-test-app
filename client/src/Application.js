@@ -11,6 +11,7 @@ import { TOAST_SUCCESS_MESSAGE } from 'shared/constants';
 import { MainPlate, ContentPlate, Nav } from './components';
 import { Auth as AuthCallback } from './routes/auth';
 import { Clients } from './routes/clients';
+import { Products } from './routes/products';
 
 const {
   REACT_APP_8BASE_API_ENDPOINT,
@@ -35,10 +36,12 @@ class Application extends React.PureComponent {
           <MainPlate>
             <Nav.Plate color="BLUE">
               <Nav.Item icon="Customers" to="/clients" label="Clients" />
+              <Nav.Item icon="Screens" to="/products" label="Products" />
             </Nav.Plate>
             <ContentPlate>
               <Switch>
                 <ProtectedRoute exact path="/clients" component={Clients} />
+                <ProtectedRoute exact path="/products" component={Products} />
                 <Redirect to="/clients" />
               </Switch>
             </ContentPlate>

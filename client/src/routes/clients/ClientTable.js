@@ -25,7 +25,7 @@ let ClientTable = ({ clients, openModal, closeModal }) => (
     <Table.Body loading={ clients.loading } data={ R.pathOr([], ['clientsList', 'items'], clients) } action="Create Client" onActionClick={() => openModal(ClientCreateDialog.id)}>
       {
         (client) => (
-          <Table.BodyRow columns="repeat(5, 1fr) 60px" key={ client.id }>
+          <Table.BodyRow columns="repeat(6, 1fr) 60px" key={ client.id }>
             <Table.BodyCell>
               { client.firstName }
             </Table.BodyCell>

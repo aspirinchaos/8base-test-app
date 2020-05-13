@@ -6,30 +6,30 @@ import { graphql } from 'react-apollo';
 import * as sharedGraphQL from 'shared/graphql';
 import { TOAST_SUCCESS_MESSAGE } from 'shared/constants';
 
-const CLIENT_DELETE_DIALOG_ID = 'CLIENT_DELETE_DIALOG_ID';
+const PRODUCT_DELETE_DIALOG_ID = 'PRODUCT_DELETE_DIALOG_ID';
 
-class ClientDeleteDialog extends React.Component {
+class ProductDeleteDialog extends React.Component {
   static contextType = ModalContext;
 
   createOnSubmit = (id) => async () => {
-    await this.props.clientDelete({ variables: { id }});
+    await this.props.productDelete({ variables: { id }});
 
-    this.context.closeModal(CLIENT_DELETE_DIALOG_ID);
+    this.context.closeModal(PRODUCT_DELETE_DIALOG_ID);
   };
 
   onClose = () => {
-    this.context.closeModal(CLIENT_DELETE_DIALOG_ID);
+    this.context.closeModal(PRODUCT_DELETE_DIALOG_ID);
   };
 
   renderFormContent = ({ handleSubmit, invalid, submitting }) => (
     <form onSubmit={ handleSubmit }>
-      <Dialog.Header title="Delete Client" onClose={ this.onClose } />
+      <Dialog.Header title="Delete Product" onClose={ this.onClose } />
       <Dialog.Body scrollable>
-        Are you really want to delete client?
+        Are you really want to delete product?
       </Dialog.Body>
       <Dialog.Footer>
         <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ this.onClose }>Cancel</Button>
-        <Button color="danger" type="submit" disabled={ invalid } loading={ submitting }>Delete Client</Button>
+        <Button color="danger" type="submit" disabled={ invalid } loading={ submitting }>Delete Product</Button>
       </Dialog.Footer>
     </form>
   );
@@ -44,23 +44,23 @@ class ClientDeleteDialog extends React.Component {
 
   render() {
     return (
-      <Dialog id={ CLIENT_DELETE_DIALOG_ID } size="sm">
+      <Dialog id={ PRODUCT_DELETE_DIALOG_ID } size="sm">
         { this.renderContent }
       </Dialog>
     );
   }
 }
 
-ClientDeleteDialog = graphql(sharedGraphQL.CLIENT_DELETE_MUTATION, {
-  name: 'clientDelete',
+ProductDeleteDialog = graphql(sharedGraphQL.PRODUCT_DELETE_MUTATION, {
+  name: 'productDelete',
   options: {
-    refetchQueries: ['ClientsList'],
+    refetchQueries: ['ProductsList'],
     context: {
-      [TOAST_SUCCESS_MESSAGE]: 'Client successfully deleted'
+      [TOAST_SUCCESS_MESSAGE]: 'Product successfully deleted'
     },
   },
-})(ClientDeleteDialog);
+})(ProductDeleteDialog);
 
-ClientDeleteDialog.id = CLIENT_DELETE_DIALOG_ID;
+ProductDeleteDialog.id = PRODUCT_DELETE_DIALOG_ID;
 
-export { ClientDeleteDialog };
+export { ProductDeleteDialog };
