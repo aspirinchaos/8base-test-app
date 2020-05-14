@@ -11,6 +11,11 @@ const BREADCRUMBS_ROUTES = [
     matchOptions: { exact: true },
   },
   {
+    path: '/orders',
+    component: () => 'Orders',
+    matchOptions: { exact: true },
+  },
+  {
     path: '/products',
     component: () => 'Products',
     matchOptions: { exact: true },

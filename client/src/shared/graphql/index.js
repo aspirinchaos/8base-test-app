@@ -85,3 +85,45 @@ export const PRODUCTS_LIST_QUERY = gql`
   }
 `;
 
+
+export const ORDER_CREATE_MUTATION = gql`
+  mutation OrderCreate($data: OrderCreateInput!) {
+    orderCreate(data: $data) {
+      id
+    }
+  }
+`;
+
+export const ORDER_DELETE_MUTATION = gql`
+  mutation OrderDelete($id: ID!) {
+    orderDelete(data: { id: $id }) {
+      success
+    }
+  }
+`;
+
+export const ORDERS_LIST_QUERY = gql`
+  query OrdersList {
+    ordersList {
+      items {
+        id
+        deliveryDate
+        address
+        comment
+        status
+        client {
+          firstName
+          lastName
+        }
+        order_Product {
+          items {
+            price
+            quantity
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
