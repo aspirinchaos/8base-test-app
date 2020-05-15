@@ -146,3 +146,25 @@ export const ORDER_PRODUCTS_LIST_QUERY = gql`
   }
 `;
 
+
+export const CLIENT_ORDERS_LIST_QUERY = gql`
+  query ClientOrdersList($id: ID!) {
+    ordersList( filter: { client: { id: { equals: $id } } } ) {
+      items {
+        id
+        deliveryDate
+        address
+        comment
+        status
+        order_Product {
+          items {
+            price
+            id
+            quantity
+          }
+        }
+      }
+    }
+  }
+`;
+

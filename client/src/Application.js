@@ -11,6 +11,7 @@ import { TOAST_SUCCESS_MESSAGE } from 'shared/constants';
 import { MainPlate, ContentPlate, Nav } from './components';
 import { Auth as AuthCallback } from './routes/auth';
 import { Clients } from './routes/clients';
+import { ClientView } from './routes/client-view';
 import { Orders } from './routes/orders';
 import { OrderView } from './routes/order-view';
 import { Products } from './routes/products';
@@ -44,6 +45,7 @@ class Application extends React.PureComponent {
             <ContentPlate>
               <Switch>
                 <ProtectedRoute exact path="/clients" component={Clients} />
+                <ProtectedRoute path="/client/:id" component={ClientView} />
                 <ProtectedRoute exact path="/orders" component={Orders} />
                 <ProtectedRoute path="/order/:id" component={OrderView} />
                 <ProtectedRoute exact path="/products" component={Products} />
