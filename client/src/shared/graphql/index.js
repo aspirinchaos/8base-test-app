@@ -127,3 +127,22 @@ export const ORDERS_LIST_QUERY = gql`
   }
 `;
 
+export const ORDER_PRODUCTS_LIST_QUERY = gql`
+  query OrderProductsList($id: ID!) {
+    orders_ProductsList( filter: { order: { id: { equals: $id } } } ) {
+      items {
+        id
+        price
+        quantity
+        product {
+          name
+          picture {
+            id
+            downloadUrl
+          }
+        }
+      }
+    }
+  }
+`;
+

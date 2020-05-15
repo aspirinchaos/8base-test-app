@@ -1,16 +1,23 @@
 import React from 'react';
 import { compose } from 'recompose';
 import * as R from 'ramda';
+import { withRouter } from 'react-router';
 import { Table, Dropdown, Icon, Menu, withModal } from '@8base/boost';
 import { graphql } from 'react-apollo';
 import { DateTime } from 'luxon';
+import PropTypes from 'prop-types';
 
 import * as sharedGraphQL from 'shared/graphql';
 
 import { OrderCreateDialog } from './OrderCreateDialog';
 import { OrderDeleteDialog } from './OrderDeleteDialog';
 
-let OrderTable = ({ orders, openModal, closeModal }) => {
+let OrderTable = ({ orders, openModal, closeModal, history }) => {
+
+  const viewProducts = (id, closeDropdown) => {
+    history.push(`/order/${id}`);
+    closeDropdown();
+  };
 
   const onDelete = (id, closeDropdown) => {
     openModal(OrderDeleteDialog.id, { id });
@@ -64,6 +71,7 @@ let OrderTable = ({ orders, openModal, closeModal }) => {
                     ({ closeDropdown }) => (
                       <Menu>
                         <Menu.Item onClick={() => onDelete(order.id, closeDropdown)}>Delete</Menu.Item>
+                        <Menu.Item onClick={() => viewProducts(order.id, closeDropdown)}>View</Menu.Item>
                       </Menu>
                     )
                   }
@@ -77,8 +85,13 @@ let OrderTable = ({ orders, openModal, closeModal }) => {
   );
 };
 
+OrderTable.propTypes = {
+  history: PropTypes.object.isRequired,
+};
+
 OrderTable = compose(
   withModal,
+  withRouter,
   graphql(sharedGraphQL.ORDERS_LIST_QUERY, { name: 'orders' }),
 )(OrderTable);
 

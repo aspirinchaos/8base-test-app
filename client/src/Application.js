@@ -12,6 +12,7 @@ import { MainPlate, ContentPlate, Nav } from './components';
 import { Auth as AuthCallback } from './routes/auth';
 import { Clients } from './routes/clients';
 import { Orders } from './routes/orders';
+import { OrderView } from './routes/order-view';
 import { Products } from './routes/products';
 
 const {
@@ -44,6 +45,7 @@ class Application extends React.PureComponent {
               <Switch>
                 <ProtectedRoute exact path="/clients" component={Clients} />
                 <ProtectedRoute exact path="/orders" component={Orders} />
+                <ProtectedRoute path="/order/:id" component={OrderView} />
                 <ProtectedRoute exact path="/products" component={Products} />
                 <Redirect to="/clients" />
               </Switch>
