@@ -8,6 +8,7 @@ import { DateTime } from 'luxon';
 import PropTypes from 'prop-types';
 
 import * as sharedGraphQL from 'shared/graphql';
+import { calcSum } from 'shared/helpers';
 
 import { OrderCreateDialog } from './OrderCreateDialog';
 import { OrderDeleteDialog } from './OrderDeleteDialog';
@@ -22,10 +23,6 @@ let OrderTable = ({ orders, openModal, closeModal, history }) => {
   const onDelete = (id, closeDropdown) => {
     openModal(OrderDeleteDialog.id, { id });
     closeDropdown();
-  };
-
-  const calcSum = (items) => {
-    return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
 
   return (
